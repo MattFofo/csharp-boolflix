@@ -10,109 +10,87 @@ using boolflix.Models;
 
 namespace boolflix.Controllers
 {
-    public class MoviesController : Controller
+    public class ProfilesController : Controller
     {
         private readonly BoolflixContext _context;
 
-        public MoviesController(BoolflixContext context)
+        public ProfilesController(BoolflixContext context)
         {
             _context = context;
         }
 
-
-        public async Task<IActionResult> Play(int profileId, int movieId)
-        {
-            Profile? profile = _context.Profiles.Find(profileId);
-            Movie? movie = _context.Movies.Find(movieId);
-
-            if (profile == null || movie == null)
-            {
-                return NotFound();
-            }
-
-            if (profile.VideoContents.Contains(movie))
-            {
-                return RedirectToAction("Index");
-            }
-
-            profile.VideoContents.Add(movie);
-            await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
-
-        }
-
-        // GET: Movies
+        // GET: Profiles
         public async Task<IActionResult> Index()
         {
-              return _context.Movies != null ? 
-                          View(await _context.Movies.ToListAsync()) :
-                          Problem("Entity set 'BoolflixContext.Movies'  is null.");
+              return _context.Profiles != null ? 
+                          View(await _context.Profiles.ToListAsync()) :
+                          Problem("Entity set 'BoolflixContext.Profiles'  is null.");
         }
 
-        // GET: Movies/Details/5
+        // GET: Profiles/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Movies == null)
+            if (id == null || _context.Profiles == null)
             {
                 return NotFound();
             }
 
-            var movie = await _context.Movies
+            var profile = await _context.Profiles
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null)
+            if (profile == null)
             {
                 return NotFound();
             }
 
-            return View(movie);
+            return View(profile);
         }
 
-        // GET: Movies/Create
+        // GET: Profiles/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Movies/Create
+        // POST: Profiles/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Duration,IsNew")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,Name,IsChild")] Profile profile)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(movie);
+                _context.Add(profile);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(movie);
+            return View(profile);
         }
 
-        // GET: Movies/Edit/5
+        // GET: Profiles/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Movies == null)
+            if (id == null || _context.Profiles == null)
             {
                 return NotFound();
             }
 
-            var movie = await _context.Movies.FindAsync(id);
-            if (movie == null)
+            var profile = await _context.Profiles.FindAsync(id);
+            if (profile == null)
             {
                 return NotFound();
             }
-            return View(movie);
+            return View(profile);
         }
 
-        // POST: Movies/Edit/5
+        // POST: Profiles/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Duration,IsNew")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,IsChild")] Profile profile)
         {
-            if (id != movie.Id)
+            if (id != profile.Id)
             {
                 return NotFound();
             }
@@ -121,12 +99,12 @@ namespace boolflix.Controllers
             {
                 try
                 {
-                    _context.Update(movie);
+                    _context.Update(profile);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MovieExists(movie.Id))
+                    if (!ProfileExists(profile.Id))
                     {
                         return NotFound();
                     }
@@ -137,49 +115,49 @@ namespace boolflix.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(movie);
+            return View(profile);
         }
 
-        // GET: Movies/Delete/5
+        // GET: Profiles/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Movies == null)
+            if (id == null || _context.Profiles == null)
             {
                 return NotFound();
             }
 
-            var movie = await _context.Movies
+            var profile = await _context.Profiles
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null)
+            if (profile == null)
             {
                 return NotFound();
             }
 
-            return View(movie);
+            return View(profile);
         }
 
-        // POST: Movies/Delete/5
+        // POST: Profiles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Movies == null)
+            if (_context.Profiles == null)
             {
-                return Problem("Entity set 'BoolflixContext.Movies'  is null.");
+                return Problem("Entity set 'BoolflixContext.Profiles'  is null.");
             }
-            var movie = await _context.Movies.FindAsync(id);
-            if (movie != null)
+            var profile = await _context.Profiles.FindAsync(id);
+            if (profile != null)
             {
-                _context.Movies.Remove(movie);
+                _context.Profiles.Remove(profile);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MovieExists(int id)
+        private bool ProfileExists(int id)
         {
-          return (_context.Movies?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Profiles?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

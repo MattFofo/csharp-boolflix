@@ -4,6 +4,8 @@
     
 }
 
+@model Movie
+
 <div class="jumbotron">
     <div class="text-center">
         <h1 class="display-4">Welcome</h1>
@@ -12,9 +14,10 @@
     <div class="card bg-dark text-white">
         <img src="https://picsum.photos/500/100" class="card-img" alt="...">
         <div class="card-img-overlay">
-            <h5 class="card-title">@jumboCoverMovie.Title</h5>
+            <h5 class="card-title">@Model.Title</h5>
             <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
             <p class="card-text">Last updated 3 mins ago</p>
+            <a asp-controller="Movies" asp-action="Play" asp-route-movieId="@Model.Id" asp-route-profileId="1" class="btn btn-primary">Play</a>
         </div>
     </div>
 </div>

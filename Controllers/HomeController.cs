@@ -1,6 +1,7 @@
 ﻿using boolflix.Data;
 using boolflix.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Data.Entity;
 using System.Diagnostics;
 
 namespace boolflix.Controllers
@@ -22,11 +23,11 @@ namespace boolflix.Controllers
         {
             Random rand = new Random();
             int totalVideoContents = _context.VideoContents.Count();
-            Movie rndMovie = (Movie)_context.VideoContents.Skip(rand.Next(totalVideoContents)).First();
+            Movie rndMovie = (Movie)_context.VideoContents.Skip(rand.Next(totalVideoContents)).Include("Profiles").First();
 
             ViewData["JumboCover"] = rndMovie;
 
-            return View();
+            return View(rndMovie);
         }
 
         public IActionResult Privacy()
