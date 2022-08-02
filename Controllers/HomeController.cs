@@ -1,5 +1,6 @@
 ﻿using boolflix.Data;
 using boolflix.Models;
+using boolflix.Models.PlaylistFactory;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Entity;
 using System.Diagnostics;
@@ -25,7 +26,12 @@ namespace boolflix.Controllers
             int totalVideoContents = _context.VideoContents.Count();
             Movie rndMovie = (Movie)_context.VideoContents.Skip(rand.Next(totalVideoContents)).Include("Profiles").First();
 
+            List<Playlist> playlists = new List<Playlist>();
+
+            playlists.Add(new PlaylistByDuration(130));
+
             ViewData["JumboCover"] = rndMovie;
+            ViewData["Playlists"] = playlists;
 
             return View(rndMovie);
         }
