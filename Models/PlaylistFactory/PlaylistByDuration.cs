@@ -5,7 +5,6 @@ namespace boolflix.Models.PlaylistFactory
 {
     internal class PlaylistByDuration : Playlist
     {
-        public string Title { get; set; }
         public int Duration { get; set; }
         public PlaylistByDuration(int duration)
         {
