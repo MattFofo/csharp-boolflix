@@ -11,8 +11,8 @@ namespace boolflix.Models
         public bool IsChild { get; set; }
 
         //relazioni
-        public List<VideoContent> VideoContents { get; set; }
+        public List<VideoContent>? VideoContents { get; set; }
 
-        public Playlist Playlist { get; set; }
+        public Playlist? Playlist { get; set; }
     }
 }

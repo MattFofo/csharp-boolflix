@@ -43,6 +43,7 @@ namespace boolflix.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: false),
+                    IsNew = table.Column<bool>(type: "bit", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -57,7 +58,7 @@ namespace boolflix.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProfileId = table.Column<int>(type: "int", nullable: false)
+                    ProfileId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,8 +67,7 @@ namespace boolflix.Migrations
                         name: "FK_Playlists_Profiles_ProfileId",
                         column: x => x.ProfileId,
                         principalTable: "Profiles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -151,7 +151,8 @@ namespace boolflix.Migrations
                 name: "IX_Playlists_ProfileId",
                 table: "Playlists",
                 column: "ProfileId",
-                unique: true);
+                unique: true,
+                filter: "[ProfileId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PlaylistVideoContent_VideoContentsId",

@@ -9,9 +9,9 @@ namespace boolflix.Models
         public string Title { get; set; }
 
         //relazioni
-        public Profile Profile { get; set; }
-        public int ProfileId { get; set; }
+        public Profile? Profile { get; set; }
+        public int? ProfileId { get; set; }
 
-        public List<VideoContent> VideoContents { get; set; }
+        public List<VideoContent>? VideoContents { get; set; }
     }
 }

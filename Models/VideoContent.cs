@@ -11,11 +11,13 @@ namespace boolflix.Models
 
         public int Duration { get; set; }
 
+        public bool IsNew { get; set; }
+
         //relazioni
-        public List<Genre> Genres { get; set; }
+        public List<Genre>? Genres { get; set; }
 
-        public List<Profile> Profiles { get; set; }
+        public List<Profile>? Profiles { get; set; }
 
-        public List<Playlist> Playlists { get; set; }
+        public List<Playlist>? Playlists { get; set; }
     }
 }

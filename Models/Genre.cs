@@ -6,6 +6,6 @@
         public string Name { get; set; }
 
         //relazioni
-        public List<VideoContent> VideoContents { get; set; }
+        public List<VideoContent>? VideoContents { get; set; }
     }
 }
